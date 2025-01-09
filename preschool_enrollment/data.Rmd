@@ -3,7 +3,9 @@ title: "data"
 output: html_document
 ---
 
-This script imports ACS 5 year estimates on preschool enrollment
+This script imports ACS 5 year estimates on preschool enrollment.
+
+Note "School"includes both private and public schools.
 
 ```{r}
 library(dplyr)
@@ -12,18 +14,27 @@ year <- 2021
 county_of_interest <- '23005' 
 state_of_interest <- '23'
 
+codebook <- tidycensus::load_variables(2021, "acs5", cache = TRUE) %>% 
+  filter(
+    concept == 'SEX BY SCHOOL ENROLLMENT BY TYPE OF SCHOOL BY AGE FOR THE POPULATION 3 YEARS AND OVER',
+     grepl("3 and 4 years",label)
+    ) %>% 
+  select(name, label)
+print(codebook)
+
+
 variables <- c(
-  'enrolled_in_private_or_public_school_3_and_4_yo' = 'B14003_004', # Male
-  'enrolled_in_private_or_public_school_3_and_4_yo' = 'B14003_013', # Male
-  'not_enrolled_in_school_3_and_4_yo' = 'B14003_022', # Male
-  'enrolled_in_private_or_public_school_3_and_4_yo' = 'B14003_032', # Female
-  'enrolled_in_private_or_public_school_3_and_4_yo' = 'B14003_041', # Female
-  'not_enrolled_in_school_3_and_4_yo' = 'B14003_050' # Female
+  'Enrolled in preschool' = 'B14003_004', # Male
+  'Enrolled in preschool' = 'B14003_013', # Male
+  'Not enrolled in preschool' = 'B14003_022', # Male
+  'Enrolled in preschool' = 'B14003_032', # Female
+  'Enrolled in preschool' = 'B14003_041', # Female
+  'Not enrolled in preschool' = 'B14003_050' # Female
 )
 
 
 states <- tigris::states() %>% 
-    sf::st_drop_geometry() 
+  sf::st_drop_geometry() 
 
 # Import ACS Data
 acs_county <- tidycensus::get_acs(
@@ -54,7 +65,7 @@ acs_us <- tidycensus::get_acs(
 )
 
 combined <- bind_rows(acs_county, acs_state, acs_us) %>% 
-    group_by(NAME, GEOID, variable) %>%
+  group_by(NAME, GEOID, variable) %>%
   summarise(estimate = sum(estimate, na.rm = TRUE)) %>%
   tidyr::pivot_wider(
     names_from = 'variable',
@@ -63,10 +74,11 @@ combined <- bind_rows(acs_county, acs_state, acs_us) %>%
 
 out <- combined %>% 
   mutate(
-    total_3_and_4_yo = enrolled_in_private_or_public_school_3_and_4_yo + not_enrolled_in_school_3_and_4_yo,
-    pct_enrolled_school_3_and_4_yo = enrolled_in_private_or_public_school_3_and_4_yo / total_3_and_4_yo,
+    `Total preschool age children` = `Enrolled in preschool` + `Not enrolled in preschool`,
+    `Share enrolled in preschool` = `Enrolled in preschool` / `Total preschool age children`,
+    NAME = gsub("\\,.*", "", NAME)
   ) 
 
 
-print(out)
+knitr::kable(out)
 ```
