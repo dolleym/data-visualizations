@@ -20,7 +20,8 @@ codebook <- tidycensus::load_variables(2021, "acs5", cache = TRUE) %>%
      grepl("3 and 4 years",label)
     ) %>% 
   select(name, label)
-print(codebook)
+
+knitr::kable(codebook)
 
 ```
 
