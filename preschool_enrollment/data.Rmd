@@ -5,7 +5,7 @@ output: html_document
 
 This script imports ACS 5 year estimates on preschool enrollment.
 
-Note "School"includes both private and public schools.
+Note "School" includes both private and public schools.
 
 ```{r}
 library(dplyr)
@@ -22,7 +22,9 @@ codebook <- tidycensus::load_variables(2021, "acs5", cache = TRUE) %>%
   select(name, label)
 print(codebook)
 
+```
 
+```{r}
 variables <- c(
   'Enrolled in preschool' = 'B14003_004', # Male
   'Enrolled in preschool' = 'B14003_013', # Male
