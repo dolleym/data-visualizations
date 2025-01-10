@@ -15,3 +15,7 @@ a:link {
   a:hover {
     text-decoration: underline;
   }
+
+  .title {
+    text-align: center;
+  }
