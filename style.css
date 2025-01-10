@@ -1,0 +1,17 @@
+html {
+    font-family: 'Montserrat'
+  }
+
+a:link {
+    color: blue;
+    text-decoration: none;
+
+  }
+  a:visited {
+    color: darkblue;
+    text-decoration: none;
+
+  }
+  a:hover {
+    text-decoration: underline;
+  }
