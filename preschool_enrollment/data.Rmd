@@ -3,7 +3,6 @@ output:
   html_document:
     toc: true
     toc_float: true
-      collapsed: false
     theme: united
     
 ---
@@ -16,7 +15,7 @@ This script loads, analyzes and charts American Census 5 Year Estimates on presc
 library(dplyr)
 library(ggplot2)
 ```
-<h2>Flexible variables</h2>
+<h2>Variables that can be updated as needed</h2>
 ```{r message=FALSE}
 year <- 2023
 county_of_interest <- '23005' 
@@ -30,7 +29,7 @@ geos <- c('us', 'state', 'county')
 codebook <- tidycensus::load_variables(2021, "acs5", cache = TRUE) %>% 
   filter(
     concept == 'SEX BY SCHOOL ENROLLMENT BY TYPE OF SCHOOL BY AGE FOR THE POPULATION 3 YEARS AND OVER',
-    grepl("3 and 4 years",label)
+    grepl("3 and 4 years", label)
   )
 ```
 
@@ -39,15 +38,15 @@ knitr::kable(codebook)
 
 ```
 
-<h2>Assign variables human readable names</h2>
+<h2>Assign Human Readable Names to Variables</h2>
 ```{r message=FALSE}
 variables <- c(
-  'Enrolled in preschool' = 'B14003_004', # Male
-  'Enrolled in preschool' = 'B14003_013', # Male
-  'Not enrolled in preschool' = 'B14003_022', # Male
-  'Enrolled in preschool' = 'B14003_032', # Female
-  'Enrolled in preschool' = 'B14003_041', # Female
-  'Not enrolled in preschool' = 'B14003_050' # Female
+  'Enrolled in preschool' = 'B14003_004',
+  'Enrolled in preschool' = 'B14003_013', 
+  'Not enrolled in preschool' = 'B14003_022', 
+  'Enrolled in preschool' = 'B14003_032', 
+  'Enrolled in preschool' = 'B14003_041', 
+  'Not enrolled in preschool' = 'B14003_050' 
 ) 
 ```
 
@@ -62,23 +61,23 @@ assemble <- lapply(geos, function(geo){
       year = year,
       survey = "acs5",
       cache_table = TRUE
-    ) %>% filter(GEOID == county_of_interest) } else if (geo == 'state') {
+    ) %>% filter(GEOID == county_of_interest) 
+  } else if (geo == 'state') {
+    data <- tidycensus::get_acs(
+      geography = geo,
+      variables = variables,
+      state = state_of_interest,
+      year = year,
+      survey = "acs5",
+      cache_table = TRUE
+    ) } else {
       data <- tidycensus::get_acs(
         geography = geo,
         variables = variables,
-        state = state_of_interest,
         year = year,
         survey = "acs5",
         cache_table = TRUE
-      ) } else {
-        data <- tidycensus::get_acs(
-          geography = geo,
-          variables = variables,
-          year = year,
-          survey = "acs5",
-          cache_table = TRUE
-        ) }
-  return(data)
+      ) }
 }) %>% bind_rows()
 
 ```
@@ -98,18 +97,17 @@ chart_dta <- assemble %>%
   ) 
 ```
 
-<h2>Preview and Save Chart Data</h2>
+<h2>Preview Chart Data</h2>
 ```{r echo=FALSE}
 knitr::kable(chart_dta)
 ```
 
-<h2>Draw Chart</h2>
+<h2>Build Chart</h2>
 ```{r message=FALSE}
 
 ## Loading Google fonts (https://fonts.google.com/)
 sysfonts::font_add_google("Montserrat", "montserrat")
 
-## Automatically use showtext to render text
 showtext::showtext_auto()
 
 # Create Chart
@@ -153,7 +151,7 @@ fig <- chart_dta %>%
   )
 
 # Save chart
-ggsave("output/bar_chart_enrollment2.png", height = 2.75)
+ggsave("output/bar_chart_enrollment.png", height = 2.75)
 ```
 ```{r echo=FALSE}
 knitr::include_graphics('../preschool_enrollment/output/bar_chart_enrollment.png')
