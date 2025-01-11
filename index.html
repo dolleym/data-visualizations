@@ -1,20 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <link href='style.css' rel='stylesheet'>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Visualizations</title>
+    <title>Dolley MacDermot</title>
+    <!-- <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'> -->
+    <link href='css/main.css' rel='stylesheet'>
+    <link href='css/media.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 </head>
 <body>
-    <div>
-        <h1 class=title>Data Visualizations</h1>
-        <p><a href='preschool_enrollment/data.Rmd'>Bar Chart Example<a></p>
+    <div id="preloader">
+      <div class="jumping-dots">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-    
 
+    <header id="header" class="header">
+      <div class="container container-lg">
+        <div class="header-nav">
+          <a href="#home" class="logo">D<span>.</span>MacDermot</a>
+          <nav id="nav" class="nav">
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="#home" class="nav-link active">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="#about" class="nav-link">About</a>
+              </li>
+              <li class="nav-item">
+                <a href="#projects" class="nav-link">Works</a>
+              </li>
+              <li class="nav-item">
+                <!-- <a href="#contact" class="nav-link">Contact</a> -->
+                <a href="mailto:dolley.macdermot@gmail.com?Subject=%F0%9F%91%8B+Hi+Dolley,+I%27d+like+to+work+with+you" class="nav-link" target="_blank">Contact</a>
+              </li>
+            </ul>
+            <button id="nav-btn" class="nav-btn">
+              <img
+                id="nav-btn-img"
+                src="img/icons/open.svg"
+                alt="Navigation button"
+              />
+            </button>
+          </nav>
+        </div>
+      </div>
+    </header>
 
-</body>
+    <section id="home" class="hero">
+      <div class="container container-lg">
+        <div
+          class="hero-row"
+          data-aos="fade-zoom-in"
+          data-aos-easing="ease-in-out"
+          data-aos-delay="1800"
+          data-aos-duration="2000"
+        >
+          <div class="hero-content">
+            <span class="hero-greeting"> Hello, I am</span>
+            <h1 class="hero-heading">Dolley MacDermot</h1>
+            <span class="hero-heading-subtitle"
+              >Data Analytics & Visualization Engineer</span
+            >
+            <div class="about-social-list">
+              <div class="social-links-row">
+                <a href="https://github.com/dolleym" target="_blank">
+                  <img
+                    src="img/social_icons/github.svg"
+                    alt="Link to GitHub account"
+                  />
+                </a>
+
+                <a href="https://www.linkedin.com/in/dolley-macdermot-5490a442/" target="_blank">
+                  <img
+                    src="img/social_icons/linkedin.svg"
+                    alt="Link to linkedin profile"
+                  />
+                </a>
+
+                <!-- <a href="#!">
+                  <img
+                    src="img/social_icons/xing.svg"
+                    alt="Link to Xing profile"
+                  />
+                </a> -->
+
+                <!-- <a href="#!">
+                  <img
+                    src="img/social_icons/facebook.svg"
+                    alt="Link to facebook profile"
+                /></a> -->
+                <!-- <a href="#!">
+                  <img
+                    src="img/social_icons/instagram.svg"
+                    alt="Link to instagram profile"
+                /></a> -->
+              </div>
+            </div>
+
+            <div>
+              <a href="#projects" class="btn">My Portfolio</a>
+              <a href="mailto:dolley.macdermot@gmail.com?Subject=%F0%9F%91%8B+Hi+Dolley,+I%27d+like+to+work+with+you" class="btn btn-white" target="_blank">Contact Me</a>
+            </div>
+          </div>
+          <div class="hero-img">
+            <!-- <img
+              src="img/hero/hero.png"
+              alt="Picture of Christian Buehner taken from Unsplash</a>
+              "
+            /> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-title">
+          <h2 class="title">About Me</h2>
+        </div>
+        <div class="about-row">
+          <div class="about-content">
+            <p class="about-descr">
+                I am a cross-functional expert with experience designing user friendly 
+                visualizations and tools that cater to stakeholder needs. Whether I am 
+                creating marketing reports for executive staff or designing visualizations 
+                for thought leadership pieces, my goal is to generate accessible and engaging 
+                products that will drive action and create change.<br />
+            </p>
+            <!-- <div class="about-download-btn">
+              <a href="#!" class="btn btn-white">Download CV</a>
+            </div> -->
+          </div>
+          <div class="about-skills">
+            <div class="skill">
+              <div class="skill-title">Web design</div>
+              <div class="skill-percent">90%</div>
+              <div class="skillbar" style="width: 90%"></div>
+            </div>
+            <div class="skill">
+              <div class="skill-title">HTML/CSS</div>
+              <div class="skill-percent">85%</div>
+              <div class="skillbar" style="width: 85%"></div>
+            </div>
+            <div class="skill">
+              <div class="skill-title">JavaScript</div>
+              <div class="skill-percent">50%</div>
+              <div class="skillbar" style="width: 50%"></div>
+            </div>
+            <div class="skill">
+              <div class="skill-title">R</div>
+              <div class="skill-percent">80%</div>
+              <div class="skillbar" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="services-row">
+          <div class="service-card" data-aos="fade-down">
+            <img class="service-card-img" src="img/services/01.svg" alt="" />
+            <h3 class="service-card-title">UI/UX Design</h3>
+            <p>
+            </p>
+          </div>
+
+          <div class="service-card" data-aos="fade-down">
+            <img class="service-card-img" src="img/services/02.svg" alt="" />
+            <h3 class="service-card-title">Frontend Development</h3>
+            <p>
+            </p>
+          </div>
+
+          <div class="service-card" data-aos="fade-down">
+            <img class="service-card-img" src="img/services/03.svg" alt="" />
+            <h3 class="service-card-title">Data Analysis & Visualization</h3>
+            <p>
+            </p>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container container-lg">
+        <div class="projects-title">
+          <h2 class="title">Works</h2>
+        </div>
+
+        <div class="projects-row">
+          <div class="project-box">
+            <a href="preschool_enrollment/data.html" target="_blank">
+              <img class="project-img" src="img/works/01.jpg" alt="" />
+              <div class="project-mask">
+                <div class="project-caption">
+                  <h5 class="white">Preschool Enrollment</h5>
+                  <p class="white">Data Analysis and Visualizaton</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="project-box">
+            <a href="https://ruralinnovation.us/blog/who-lives-in-rural-america-part-i/" target="_blank">
+              <img class="project-img" src="img/works/02.jpg" alt="" />
+              <div class="project-mask">
+                <div class="project-caption">
+                  <h5 class="white">Who lives in Rural Part I</h5>
+                  <p class="white">Data analysis and static visualizations</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="project-box">
+            <a href="https://ruralinnovation.us/blog/who-lives-in-rural-america-part-2/" target="_blank">
+              <img class="project-img" src="img/works/03.jpg" alt="" />
+              <div class="project-mask">
+                <div class="project-caption">
+                  <h5 class="white">Who lives in Rural Part II</h5>
+                  <p class="white">Data analysis and static visualizations</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="project-box">
+            <a href="https://ruralinnovation.us/resources/mapping-and-data-analytics/surfacing-local-assets/">
+              <img class="project-img" src="img/works/04.jpg" alt="" />
+              <div class="project-mask">
+                <div class="project-caption">
+                  <h5 class="white">Surfacing rural assets</h5>
+                  <p class="white">Data analysis and map development</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <!--
+          <div class="project-box">
+            <a href="#!">
+              <img class="project-img" src="img/works/05.jpg" alt="" />
+              <div class="project-mask">
+                <div class="project-caption">
+                  <h5 class="white">Cosmic Sea</h5>
+                  <p class="white">UI/UX Design, Web Development</p>
+                </div>
+              </div>
+            </a>
+          </div> -->
+          <!-- <div class="project-box">
+            <a href="#!">
+              <img class="project-img" src="img/works/06.jpg" alt="" />
+              <div class="project-mask">
+                <div class="project-caption">
+                  <h5 class="white">eCommerce</h5>
+                  <p class="white">Web Development</p>
+                </div>
+              </div>
+            </a>
+          </div> -->
+        </div>
+      </div>
+    </section>
+<!-- 
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact-title">
+          <h2 class="title">Contact</h2>
+        </div>
+        <div class="contact-content">
+          <p>
+            Tell me about your project.
+            <br />
+            Let's talk and work together!
+          </p>
+        </div>
+
+        <form data-aos="zoom-in">
+          <div class="input-box">
+            <input type="text" name="name" placeholder="Full Name" required />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              required
+            />
+          </div>
+
+          <textarea
+            name="message"
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="Your Message"
+            required
+          ></textarea>
+        </form>
+
+        <div class="contact-button" data-aos="fade-up">
+          <a href="#!" class="btn btn-red">Send Message</a>
+        </div>
+      </div>
+    </section>
+  -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <div class="social-links-row footer-social">
+            <a href="https://github.com/dolleym">
+              <img
+                src="img/social_icons/github.svg"
+                alt="Link to GitHub account"
+              />
+            </a>
+
+            <a href="https://www.linkedin.com/in/dolley-macdermot-5490a442/">
+              <img
+                src="img/social_icons/linkedin.svg"
+                alt="Link to linkedin profile"
+              />
+            </a> 
+
+            <!-- <a href="#!">
+              <img src="img/social_icons/xing.svg" alt="Link to Xing profile" />
+            </a>
+
+            <a href="#!">
+              <img
+                src="img/social_icons/facebook.svg"
+                alt="Link to facebook profile"
+            /></a>
+
+            <a href="#!">
+              <img
+                src="img/social_icons/instagram.svg"
+                alt="Link to instagram profile"
+            /></a>
+          </div> -->
+
+          <div class="footer-copyright">
+            <p>&copy; Copyright Dolley MacDermot 2025 | Designed by Dolley MacDermot</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div id="goToTop" class="goToTop">
+      <a href="#home">
+        <img src="img/icons/arrow_up.svg" alt="Back to top"
+      /></a>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+      integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
