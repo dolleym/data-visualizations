@@ -156,7 +156,3 @@ ggsave("output/bar_chart_enrollment.png", height = 2.75)
 ```{r echo=FALSE}
 knitr::include_graphics('../preschool_enrollment/output/bar_chart_enrollment.png')
 ```
-
-
-
-

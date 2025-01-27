@@ -13,10 +13,9 @@ payload <- glue(
     "seriesid": [
       "LNS14027659", "LNS14027660", "LNS14027689", "LNS14027662"
     ],
-    "startyear": "2013",
-    "endyear": "2022",
-    "annualaverage": true,
-    "registration_key": {{"api_key"}}
+    "startyear": "2015",
+    "endyear": "2024",
+    "registration_key": "{{api_key}}"
   }', .open="{{", .close="}}"
 )
 
@@ -29,7 +28,37 @@ response <- POST(url,
 json <- content(response, "text") %>% 
   jsonlite::fromJSON()
 
-table <- data$Results$series$data[[1]] %>%
-  as_tibble()
 
-readr::write_csv(table, "unemployment_by_educational_attainment/data.csv")
+assemble <- lapply(1:4, function(series){
+  table <- json$Results$series$data[[series]] %>%
+    as_tibble() %>% 
+    mutate(
+      seriesid = case_when(
+        series == 1 ~ 'LNS14027659',
+        series == 2 ~ 'LNS14027660',
+        series == 3 ~ 'LNS14027689',
+        series == 4 ~ 'LNS14027662'
+      ),
+      seriesname = case_when(
+        series == 1 ~ 'Less than a High School Diploma',
+        series == 2 ~ 'High School Graduates No College',
+        series == 3 ~ 'Some College or Associate Degree ',
+        series == 4 ~ "Bachelor's Degree and Higher"
+      ) 
+    )
+}) %>% bind_rows()
+
+
+readr::write_csv(assemble, "unemployment_by_educational_attainment/data.csv")
+
+chart_dta <- readr::read_csv("unemployment_by_educational_attainment/data.csv") %>% 
+  group_by(
+    year, 
+    seriesname
+  ) %>% 
+  summarise(
+    annual_avg = mean(value)
+  )
+  
+
+
