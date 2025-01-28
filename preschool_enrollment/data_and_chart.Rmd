@@ -34,7 +34,7 @@ codebook <- tidycensus::load_variables(2021, "acs5", cache = TRUE) %>%
 ```
 
 ```{r echo=FALSE}
-knitr::kable(codebook)
+# knitr::kable(codebook)
 
 ```
 
@@ -146,7 +146,7 @@ fig <- chart_dta %>%
     panel.background = element_rect(fill = 'white', color = 'white')
   ) +
   labs(
-    title = 'Share of 3-4 year olds enrolled in preschool',
+    title = 'Share of children ages 3 and 4 enrolled in School',
     caption = 'Source: U.S. Census Bureau, 2019-2023 American Community Survey 5-Year Estimates'
   )
 
