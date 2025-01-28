@@ -18,25 +18,29 @@ library(glue)
 
 <h2>Pull data using BLS API</h2>
 ```{r message=FALSE}
-if (file.exists("unemployment_by_educational_attainment/data.csv")){
-  chart_dta <- readr::read_csv("unemployment_by_educational_attainment/data.csv") %>% 
-  group_by(
-    year, 
-    seriesname
-  ) %>% 
-  summarise(
-    annual_avg = mean(value)/100
-  )
-  } else{
+
 # Link to unemployment  series codes: https://data.bls.gov/toppicks?survey=ln
-
 # Register for a BLS API key and save as environmental variable: https://data.bls.gov/registrationEngine/
-api_key <- Sys.getenv("BLS_API_KEY") 
 
-url <- 'https://api.bls.gov/publicAPI/v1/timeseries/data/'
-
-payload <- glue(
-  '{
+if (file.exists("unemployment_by_educational_attainment/data.csv")){
+  
+  chart_dta <- readr::read_csv("unemployment_by_educational_attainment/data.csv") %>% 
+    group_by(
+      year, 
+      seriesname
+    ) %>% 
+    summarise(
+      annual_avg = mean(value)/100
+    )
+  
+} else{
+  
+  api_key <- Sys.getenv("BLS_API_KEY") 
+  
+  url <- 'https://api.bls.gov/publicAPI/v1/timeseries/data/'
+  
+  payload <- glue(
+    '{
     "seriesid": [
       "LNS14027659", "LNS14027660", "LNS14027689", "LNS14027662"
     ],
@@ -44,59 +48,57 @@ payload <- glue(
     "endyear": "2024",
     "registration_key": "{{api_key}}"
   }', .open="{{", .close="}}"
-)
-
-response <- POST(url,
-                 body = payload,
-                 content_type("application/json"),
-                 encode="json"
-)
-
-json <- content(response, "text") %>% 
-  jsonlite::fromJSON()
-
-assemble <- lapply(1:4, function(series){
-  table <- json$Results$series$data[[series]] %>%
-    as_tibble() %>% 
-    mutate(
-      seriesid = case_when(
-        series == 1 ~ 'LNS14027659',
-        series == 2 ~ 'LNS14027660',
-        series == 3 ~ 'LNS14027689',
-        series == 4 ~ 'LNS14027662'
-      ),
-      seriesname = case_when(
-        series == 1 ~ 'Less than a High School Diploma',
-        series == 2 ~ 'High School Graduates No College',
-        series == 3 ~ 'Some College or Associate Degree ',
-        series == 4 ~ "Bachelor's Degree and Higher"
-      ) 
-    )
-}) %>% bind_rows()
-
-# Write assembled data to csv
-readr::write_csv(assemble, "./data.csv")
-
- chart_dta <- readr::read_csv("./data.csv") %>% 
-  group_by(
-    year, 
-    seriesname
-  ) %>% 
-  summarise(
-    annual_avg = mean(value)/100
   )
- 
+  
+  response <- POST(url,
+                   body = payload,
+                   content_type("application/json"),
+                   encode="json"
+  )
+  
+  json <- content(response, "text") %>% 
+    jsonlite::fromJSON()
+  
+  assemble <- lapply(1:4, function(series){
+    table <- json$Results$series$data[[series]] %>%
+      as_tibble() %>% 
+      mutate(
+        seriesid = case_when(
+          series == 1 ~ 'LNS14027659',
+          series == 2 ~ 'LNS14027660',
+          series == 3 ~ 'LNS14027689',
+          series == 4 ~ 'LNS14027662'
+        ),
+        seriesname = case_when(
+          series == 1 ~ 'Less than a High School Diploma',
+          series == 2 ~ 'High School Graduates No College',
+          series == 3 ~ 'Some College or Associate Degree ',
+          series == 4 ~ "Bachelor's Degree and Higher"
+        ) 
+      )
+  }) %>% bind_rows()
+  
+  # Write assembled data to csv
+  readr::write_csv(assemble, "./data.csv")
+  
+  chart_dta <- readr::read_csv("./data.csv") %>% 
+    group_by(
+      year, 
+      seriesname
+    ) %>% 
+    summarise(
+      annual_avg = mean(value)/100
+    )
 }
 
 ```
 
-<h2>Generate Line Chart</h2>
+<h2>Build line chart</h2>
 ```{r message=FALSE}
 ## Loading Google fonts (https://fonts.google.com/)
 sysfonts::font_add_google("Montserrat", "montserrat")
 
 showtext::showtext_auto()
-
 
 color_scale = c(
   "Less than a High School Diploma" = "#bef7ff",
@@ -104,7 +106,6 @@ color_scale = c(
   "Some College or Associate Degree" = "#3f5255",
   "Bachelor's Degree and Higher" = "#000000"
 )
-
 
 fig <- chart_dta %>%
   ggplot(aes(year, annual_avg, color = seriesname), size = 2) +
@@ -126,13 +127,13 @@ fig <- chart_dta %>%
     axis.ticks.length.x = unit(5, 'pt'),
     axis.ticks.y = element_blank(),
     axis.line.x = element_line(color = "lightgray", size = .25),
-    axis.text = element_text(family = 'montserrat', size = 26),
+    axis.text = element_text(family = 'montserrat'),
     axis.text.y.left = element_text(family = 'montserrat'),
     plot.margin = margin(l = 12, t = 12, b = 12, r = 20),
-    title = element_text(family = 'montserrat', size = 34, face = 'bold'),
-    plot.subtitle = element_text(family = 'montserrat', face = 'plain', size = 26, hjust = 0,  vjust = 0),
-    plot.caption = element_text(family = 'montserrat', face = 'plain', size = 22, hjust = 0,  vjust = -2, lineheight = .5),
-    legend.text = element_text(size = 22),
+    title = element_text(family = 'montserrat', size = 20, face = 'bold'),
+    plot.subtitle = element_text(family = 'montserrat', face = 'plain', size = 10),
+    plot.caption = element_text(family = 'montserrat', face = 'plain', hjust = 0,  vjust = -3.5, lineheight = 1.45, size = 10),
+    # legend.text = element_text(size = 22),
     legend.key=element_blank(),
     legend.title = element_blank()
   ) +
@@ -145,11 +146,11 @@ fig <- chart_dta %>%
     caption = "Note: Data is for persons age 25 and over.\nSource: U.S. Bureau of Labor Statistics"
   )
 ```
-
 ```{r echo=FALSE, message=FALSE}
 # Save chart
 ggsave("output/line_chart_unemployment.png", height = 4.75)
 ```
+<h2>Finished chart</h2>
 ```{r echo=FALSE}
 knitr::include_graphics('../unemployment_by_educational_attainment/output/line_chart_unemployment.png')
 ```

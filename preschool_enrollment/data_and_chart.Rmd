@@ -24,7 +24,7 @@ geos <- c('us', 'state', 'county')
 
 ```
 
-<h2>Find appropriate variables to load</h2>
+<h2>Find variables of interest to load</h2>
 ```{r message=FALSE}
 codebook <- tidycensus::load_variables(2021, "acs5", cache = TRUE) %>% 
   filter(
@@ -34,11 +34,11 @@ codebook <- tidycensus::load_variables(2021, "acs5", cache = TRUE) %>%
 ```
 
 ```{r echo=FALSE}
-# knitr::kable(codebook)
+knitr::kable(codebook)
 
 ```
 
-<h2>Assign Human Readable Names to Variables</h2>
+<h2>Assign human readable names to variables</h2>
 ```{r message=FALSE}
 variables <- c(
   'Enrolled in preschool' = 'B14003_004',
@@ -50,7 +50,7 @@ variables <- c(
 ) 
 ```
 
-<h2>Assemble ACS Data for each geography</h2>
+<h2>Assemble ACS data for each geography</h2>
 ```{r message=FALSE, warning=FALSE}
 assemble <- lapply(geos, function(geo){
   if(geo == 'county') {  
@@ -81,7 +81,7 @@ assemble <- lapply(geos, function(geo){
 }) %>% bind_rows()
 
 ```
-<h2>Format Chart Data</h2>
+<h2>Format chart data</h2>
 ```{r message=FALSE}
 chart_dta <- assemble %>% 
   group_by(NAME, GEOID, variable) %>%
@@ -97,12 +97,12 @@ chart_dta <- assemble %>%
   ) 
 ```
 
-<h2>Preview Chart Data</h2>
+<h2>Preview chart data</h2>
 ```{r echo=FALSE}
 knitr::kable(chart_dta)
 ```
 
-<h2>Build Chart</h2>
+<h2>Build chart</h2>
 ```{r message=FALSE}
 
 ## Loading Google fonts (https://fonts.google.com/)
@@ -146,13 +146,14 @@ fig <- chart_dta %>%
     panel.background = element_rect(fill = 'white', color = 'white')
   ) +
   labs(
-    title = 'Share of children ages 3 and 4 enrolled in School',
+    title = 'Share of children ages 3 and 4 enrolled in school' %>% stringr::str_wrap(width = 40),
     caption = 'Source: U.S. Census Bureau, 2019-2023 American Community Survey 5-Year Estimates'
   )
 
 # Save chart
 ggsave("output/bar_chart_enrollment.png", height = 2.75)
 ```
+<h2>Finished chart</h2>
 ```{r echo=FALSE}
 knitr::include_graphics('../preschool_enrollment/output/bar_chart_enrollment.png')
 ```
